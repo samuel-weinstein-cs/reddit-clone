@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
-    json_response(@posts)
+    render json: @posts, include: :user
   end
   def show
     render json: @post, include: :user
