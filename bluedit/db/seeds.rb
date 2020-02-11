@@ -6,3 +6,4 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 user = User.create(username: "Sam", email:"raeweinst@gmail.com")
+post = Post.create(title:"Ayy Lmao", text: "👽👽👽 bruh moment!!!!!!!!!", image_url:"https://www.redditstatic.com/icon.png", user:user)
