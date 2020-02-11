@@ -1,0 +1,36 @@
+header h1 {
+  font-family: 'Audiowide';
+  font-size: 3rem;
+}
+.blue{
+  color:#05C0FF;
+}
+.post-preview{
+  border-bottom: 1px solid gray;
+  display:flex;
+  align-items: center;
+  height: 150px;
+
+}
+
+.post-preview-left{
+  height:100%;
+  text-align: center;
+}
+.username{
+  color: gray;
+}
+.post-preview img {
+  margin: 0 0.5vw;
+  height:80%
+}
+.post-preview div {
+  height: 100%;
+  overflow: hidden;
+
+}
+.post-preview h2, p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
