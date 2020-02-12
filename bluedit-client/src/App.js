@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-import axios from 'axios'
+
+import {getPosts} from './services/api_helper'
 
 import PostPreview from './components/PostPreview'
 
@@ -14,7 +15,7 @@ class App extends Component {
   }
 
   async componentDidMount(){
-    const posts = (await axios.get("http://localhost:3000/posts")).data;
+    const posts = await getPosts();
     this.setState({posts})
   }
 
@@ -23,11 +24,10 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1><span className="blue">Blue</span>dit</h1>
-          {this.state.posts&&this.state.posts.map(post => (
-            <PostPreview key={post.id} post={post}/>
-          ))}
-
         </header>
+        {this.state.posts&&this.state.posts.map(post => (
+          <PostPreview key={post.id} post={post}/>
+        ))}
       </div>
     );
   }

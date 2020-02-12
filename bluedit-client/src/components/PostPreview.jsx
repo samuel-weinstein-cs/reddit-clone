@@ -1,11 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 
 function PostPreview(props){
   return(
     <div className="post-preview">
       <div className="post-preview-left">
-        <img src={props.post.image_url} /><br />
+        <img src={props.post.image_url} alt=""/><br />
         <a className="username" href="#">u/{props.post.user.username}</a>
       </div>
 
