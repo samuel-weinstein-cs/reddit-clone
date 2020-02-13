@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Route,Switch} from 'react-router-dom'
+import {Route,Switch,Link,withRouter} from 'react-router-dom'
 
 import {getPosts,loginUser} from './services/api_helper'
 
@@ -25,8 +25,8 @@ class App extends Component {
 
   handleLogin = async (loginData) => {
     const user = await loginUser(loginData);
-    // this.setState({ user });
-    // this.props.history.push("/");
+    this.setState({ user });
+    this.props.history.push("/");
   }
 
   render(){
@@ -34,6 +34,11 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1><span className="blue">Blue</span>dit</h1>
+          {this.state.user?
+            <Link to="/">Welcome, {this.state.user.username}</Link>
+            :
+            <Link to="/login">Login</Link>
+          }
         </header>
         <Switch>
           <Route path='/posts/:id' render={(props)=>(
@@ -55,4 +60,4 @@ class App extends Component {
 
 }
 
-export default App;
+export default withRouter(App);
