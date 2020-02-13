@@ -6,7 +6,8 @@ class AuthenticateUser
 
   # Service entry point
   def call
-    JsonWebToken.encode(user_id: user.id) if user
+    current_user = user
+    {auth_token: JsonWebToken.encode(user_id: current_user.id), user:current_user} if current_user
   end
 
   private

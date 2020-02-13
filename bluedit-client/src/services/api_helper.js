@@ -16,22 +16,22 @@ export const getPost = async (id) => {
 }
 
 export  const loginUser = async(loginData) => {
-  const resp = await api.post('/auth/login', loginData);
-  api.defaults.headers.common.authorization = `Bearer ${resp.data.auth_token}`;
-  localStorage.setItem('authToken', resp.data.auth_token);
-  localStorage.setItem('name', resp.data.user.name);
-  localStorage.setItem('email', resp.data.user.email);
-  return resp.data.user
+  const resp = (await api.post('/auth/login', loginData)).data.auth_resp;
+  api.defaults.headers.common.authorization = `Bearer ${resp.auth_token}`;
+  localStorage.setItem('authToken', resp.auth_token);
+  localStorage.setItem('name', resp.user.name);
+  localStorage.setItem('email', resp.user.email);
+  return resp.user
 }
 
 export  const registerUser = async(loginData) => {
   try {
-    const resp = await api.post('/users/', loginData);
-    api.defaults.headers.common.authorization = `Bearer ${resp.data.auth_token}`;
-    localStorage.setItem('authToken', resp.data.auth_token);
-    localStorage.setItem('name', resp.data.user.name);
-    localStorage.setItem('email', resp.data.user.email);
-    return resp.data.user
+    const resp = (await api.post('/auth/login', loginData)).data.auth_resp;
+    api.defaults.headers.common.authorization = `Bearer ${resp.auth_token}`;
+    localStorage.setItem('authToken', resp.auth_token);
+    localStorage.setItem('name', resp.user.name);
+    localStorage.setItem('email', resp.user.email);
+    return resp.user
   } catch(e) {
     console.log(e.response);
     if(e.response.status === 422) {
