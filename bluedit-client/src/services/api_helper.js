@@ -15,6 +15,11 @@ export const getPost = async (id) => {
   return posts.data;
 }
 
+export const getComments = async(id) => {
+  const comments = await api.get(`/posts/${id}/comments`);
+  return comments.data
+}
+
 export const loginUser = async(loginData) => {
   const resp = (await api.post('/auth/login', loginData)).data.auth_resp;
   api.defaults.headers.common.authorization = `Bearer ${resp.auth_token}`;

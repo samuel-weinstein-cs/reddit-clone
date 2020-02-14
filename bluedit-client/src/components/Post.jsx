@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getPost} from '../services/api_helper'
+import {getPost, getComments} from '../services/api_helper'
 import {Link} from 'react-router-dom'
 
 export default class Post extends Component{
@@ -7,24 +7,43 @@ export default class Post extends Component{
     super(props);
 
     this.state={
-      post: null
+      post: null,
+      comments: []
     }
   }
 
   async componentDidMount(){
     const post = await getPost(this.props.id);
-    this.setState({post})
+    const comments = await getComments(this.props.id)
+    this.setState({
+      post,
+      comments
+    })
   }
 
   render(){
     return(
-      this.state.post?<div className="post">
-        <h2>{this.state.post.title}</h2>
-        <Link className="username" to="/">u/{this.state.post.user.username}</Link><br />
-        <img src={this.state.post.image_url} alt=""/><br />
-        <p>{this.state.post.text}</p>
-      </div>:
-      <h2>Loading...</h2>
+      <div>
+        {this.state.post?
+          <div className="post">
+            <h2>{this.state.post.title}</h2>
+            <Link className="username" to="/">u/{this.state.post.user.username}</Link><br />
+            <img src={this.state.post.image_url} alt=""/><br />
+            <p>{this.state.post.text}</p>
+          </div>:
+          <h2>Loading...</h2>
+        }
+        <div className="post-comments">
+          <h3>Comments</h3>
+          {this.state.comments.length?
+            this.state.comments.map((comment)=>(
+              <div>{comment.text}</div>
+            )):
+            <p>no comments</p>
+          }
+        </div>
+      </div>
+
     )
   }
 
