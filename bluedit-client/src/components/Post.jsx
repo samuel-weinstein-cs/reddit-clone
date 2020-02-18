@@ -15,10 +15,27 @@ export default class Post extends Component{
   async componentDidMount(){
     const post = await getPost(this.props.id);
     let comments = await getComments(this.props.id)
-    comments.sort((a,b)=>{
-      return a.comment_id-b.comment_id
+    let commentsObject = {} //create an empty object to hold all comments
+    let rootComments = [] // create an empty array to hold all comments that are not replies to other comments
+    comments.forEach(comment => { //loop over each comment in comments array
+      const newComment = {
+        comment,
+        children: []
+      }
+      commentsObject[comment.id]=newComment
+      if(!comment.comments_id){//if comment is a root comment
+        rootComments.push(newComment)
+      } else {//if comment has a parent,
+        //read comments_id, which is the parent comment id. this commment
+        // *should* already exist in commentsObject because of the way the database works,
+        //incrementing keys. a reply comment should never be created before the parent
+        //in theory :)
+        commentsObject[comment.comments_id].children.push(newComment)
+        //ok i just tested this and it worked basically first try wtf im a genius (j/k)
+      }
     })
-    console.log(comments);
+    console.log(commentsObject);
+    console.log(rootComments);
     this.setState({
       post,
       comments
