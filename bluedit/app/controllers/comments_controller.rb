@@ -14,8 +14,7 @@ class CommentsController < ApplicationController
   def create
     params = comment_params
     params[:user] = @current_user
-    puts params.keys
-    @post.comments.create!(params);
+    @post.comments.create!(params)
 
   end
   private

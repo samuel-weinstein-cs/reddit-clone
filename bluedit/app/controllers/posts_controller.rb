@@ -10,7 +10,19 @@ class PostsController < ApplicationController
     render json: @post, include: :user
   end
 
+  def create
+    params = post_params
+    params[:user] = @current_user
+    Post.create!(params)
+
+  end
+
+
   private
+
+  def post_params
+    params.permit(:title, :image_url, :text)
+  end
 
   def set_post
     @post=Post.find(params[:id])

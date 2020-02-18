@@ -7,6 +7,7 @@ import {loginUser, verifyUser} from './services/api_helper'
 import Post from './components/Post'
 import Login from './components/Login'
 import PostList from './components/PostList'
+import PostForm from './components/PostForm'
 
 class App extends Component {
   constructor(props){
@@ -41,7 +42,9 @@ class App extends Component {
             <Link to="/login">Login</Link>
           }
         </header>
+        <Link to="/new"><button>New Post</button></Link>
         <Switch>
+          <Route path="/new" component={PostForm} />
           <Route path='/posts/:id' render={(props)=>(
               <Post id={props.match.params.id} />
             )} />
