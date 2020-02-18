@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import {Route,Switch,Link,withRouter} from 'react-router-dom'
 
-import {loginUser} from './services/api_helper'
+import {loginUser, verifyUser} from './services/api_helper'
 
 import Post from './components/Post'
 import Login from './components/Login'
@@ -23,6 +23,11 @@ class App extends Component {
     const user = await loginUser(loginData);
     this.setState({ user });
     this.props.history.push("/");
+  }
+
+  async componentDidMount(){
+    const user = await verifyUser();
+    this.setState({user})
   }
 
   render(){

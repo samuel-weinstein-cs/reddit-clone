@@ -41,5 +41,19 @@ export const registerUser = async(loginData) => {
       return {errorMessage: "Email is Already Associated with user."}
     }
   }
+}
 
+export const verifyUser = async() => {
+  const token = localStorage.getItem('authToken');
+  if(token){
+    api.defaults.headers.common.authorization = `Bearer ${token}`;
+
+  }
+  const userId = localStorage.getItem('userId');
+  if(userId){
+    const user = await api.get(`/users/${userId}`);
+    return user.data;
+  } else {
+    return null;
+  }
 }
