@@ -47,6 +47,10 @@ export default class Post extends Component{
     return rootComments;
   }
 
+  // commentsSort = (comments) => {
+  //
+  // }
+
   render(){
     return(
       <div>

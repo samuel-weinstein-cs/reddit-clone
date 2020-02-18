@@ -2,26 +2,22 @@ import React, {Component} from 'react';
 import './App.css';
 import {Route,Switch,Link,withRouter} from 'react-router-dom'
 
-import {getPosts,loginUser} from './services/api_helper'
+import {loginUser} from './services/api_helper'
 
-import PostPreview from './components/PostPreview'
 import Post from './components/Post'
 import Login from './components/Login'
+import PostList from './components/PostList'
 
 class App extends Component {
   constructor(props){
     super(props)
 
     this.state={
-      posts:null,
       user:null
     }
   }
 
-  async componentDidMount(){
-    const posts = await getPosts();
-    this.setState({posts})
-  }
+
 
   handleLogin = async (loginData) => {
     const user = await loginUser(loginData);
@@ -48,9 +44,7 @@ class App extends Component {
               <Login handleLogin={this.handleLogin}/>
             )} />
           <Route path='/' render={() => (
-              this.state.posts&&this.state.posts.map(post => (
-                <PostPreview key={post.id} post={post}/>
-              ))
+              <PostList />
             )}/>
         </Switch>
 
