@@ -4,11 +4,11 @@ class CommentsController < ApplicationController
   skip_before_action :authorize_request, only: [:index, :show]
 
   def index
-    json_response(@post.comments)
+    render json: @post.comments, include: :user
   end
 
   def show
-    json_response(@comment)
+    render json: @comment, include: :user
   end
 
   def create
