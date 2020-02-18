@@ -16,6 +16,15 @@ export default class Post extends Component{
   async componentDidMount(){
     const post = await getPost(this.props.id);
     let comments = await getComments(this.props.id)
+    const rootComments = this.commentsCalc(comments);
+
+    this.setState({
+      post,
+      comments:rootComments
+    })
+  }
+
+  commentsCalc = (comments) => { // O(n)
     let commentsObject = {} //create an empty object to hold all comments
     let rootComments = [] // create an empty array to hold all comments that are not replies to other comments
     comments.forEach(comment => { //loop over each comment in comments array
@@ -32,15 +41,10 @@ export default class Post extends Component{
         //incrementing keys. a reply comment should never be created before the parent
         //in theory :)
         commentsObject[comment.comments_id].children.push(newComment)
-        //ok i just tested this and it worked basically first try wtf im a genius (j/k)
+        //ok i just tested this and it worked basically first try wtf
       }
     })
-    console.log(commentsObject);
-    console.log(rootComments);
-    this.setState({
-      post,
-      comments:rootComments
-    })
+    return rootComments;
   }
 
   render(){

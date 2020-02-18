@@ -33,7 +33,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1><span className="blue">Blue</span>dit</h1>
+          <Link to="/"><h1><span className="blue">Blue</span>dit</h1></Link>
           {this.state.user?
             <Link to="/">Welcome, {this.state.user.username}</Link>
             :
