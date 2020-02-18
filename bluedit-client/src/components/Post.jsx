@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {getPost, getComments} from '../services/api_helper'
 import {Link} from 'react-router-dom'
+import Comment from './Comment'
 
 export default class Post extends Component{
   constructor(props){
@@ -38,7 +39,7 @@ export default class Post extends Component{
     console.log(rootComments);
     this.setState({
       post,
-      comments
+      comments:rootComments
     })
   }
 
@@ -57,8 +58,8 @@ export default class Post extends Component{
         <div className="post-comments">
           <h3>Comments</h3>
           {this.state.comments.length?
-            this.state.comments.map((comment)=>(
-              <div key={comment.id}>{comment.text}</div>
+            this.state.comments.map((comment, key)=>(
+              <Comment key={key} comment={comment}/>
             )):
             <p>no comments</p>
           }

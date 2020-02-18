@@ -38,3 +38,8 @@ header h1 {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.comment-replies{
+  border-left: 1px solid grey;
+  margin-left: 10px;
+  padding-left: 10px;
+}
