@@ -14,7 +14,11 @@ export default class Post extends Component{
 
   async componentDidMount(){
     const post = await getPost(this.props.id);
-    const comments = await getComments(this.props.id)
+    let comments = await getComments(this.props.id)
+    comments.sort((a,b)=>{
+      return a.comment_id-b.comment_id
+    })
+    console.log(comments);
     this.setState({
       post,
       comments
@@ -37,7 +41,7 @@ export default class Post extends Component{
           <h3>Comments</h3>
           {this.state.comments.length?
             this.state.comments.map((comment)=>(
-              <div>{comment.text}</div>
+              <div key={comment.id}>{comment.text}</div>
             )):
             <p>no comments</p>
           }
