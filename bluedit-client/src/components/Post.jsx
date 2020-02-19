@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {getPost, getComments} from '../services/api_helper'
+import {getPost, getComments, postComment} from '../services/api_helper'
 import {Link} from 'react-router-dom'
 import Comment from './Comment'
 
@@ -20,7 +20,8 @@ export default class Post extends Component{
 
     this.setState({
       post,
-      comments:rootComments
+      comments:rootComments,
+      commentText: ""
     })
   }
 
@@ -65,6 +66,15 @@ export default class Post extends Component{
         }
         <div className="post-comments">
           <h3>Comments</h3>
+          <form onSubmit={async(e)=>{
+              e.preventDefault();
+              await postComment(this.state.post.id,{text:this.state.commentText});
+            }}>
+            <textarea onChange={(e)=>{
+                this.setState({commentText:e.target.value})
+              }}/><br />
+            <input type="submit" value="Post Comment" />
+          </form>
           {this.state.comments.length?
             this.state.comments.map((comment, key)=>(
               <Comment key={key} comment={comment}/>

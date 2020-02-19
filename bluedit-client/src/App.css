@@ -70,11 +70,16 @@ header{
   flex-direction: column;
   font-size: 1rem;
 }
-.post-form textarea, input{
+.post-form textarea, .post-form input{
   width: 50%;
   font-size: 1rem;
 
 
+}
+.post-comments textarea{
+  resize: none;
+  width:80%;
+  height:75px;
 }
 .post-form textarea{
   resize:none;
