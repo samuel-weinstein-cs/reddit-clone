@@ -22,7 +22,7 @@ class Comment extends Component{
         </button>
         {this.state.reply&&<form onSubmit={(e)=>{
           e.preventDefault();
-          this.props.onSubmit(this.state.commentText,this.props.comment.comment.comments_id);
+          this.props.onSubmit(this.state.commentText,this.props.comment.comment.id);
         }}>
           <textarea value={this.state.commentText} onChange={(e)=>{
               this.setState({
