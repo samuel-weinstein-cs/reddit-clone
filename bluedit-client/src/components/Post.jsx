@@ -9,7 +9,10 @@ export default class Post extends Component{
 
     this.state={
       post: null,
-      comments: [],
+      comments: {
+        rootComments:[],
+        commentsObject:{}
+      },
       commentText: ""
     }
   }
@@ -45,7 +48,7 @@ export default class Post extends Component{
         //ok i just tested this and it worked basically first try wtf
       }
     })
-    return rootComments;
+    return {rootComments,commentsObject};
   }
 
   // commentsSort = (comments) => {
@@ -56,13 +59,22 @@ export default class Post extends Component{
     this.setState({commentText:e.target.value});
   }
 
-  handleCommentSubmit = async (e)=>{
-    e.preventDefault();
+  handleCommentSubmit = async (postId, text, parent=null)=>{
     console.log("getting here");
-    const comment = await postComment(this.state.post.id,{text:this.state.commentText});
+    const comment = await postComment(postId,{text:this.state.commentText, comments_id: parent});
+    const newComment = {
+      comment,
+      children: []
+    }
+    let commentsCopy=JSON.parse(JSON.stringify(this.state.comments));//make deep copy of object, probably quite inefficient
+    if (parent){
+      commentsCopy.commentsObject[comment.comments_id].children.push(newComment)
+    } else {
+      commentsCopy.rootComments.push(newComment)
+    }
     this.setState({
       commentText:"",
-      comments:[...this.state.comments, {comment, children:[]}]
+      comments:commentsCopy
     })
   }
 
@@ -80,12 +92,15 @@ export default class Post extends Component{
         }
         <div className="post-comments">
           <h3>Comments</h3>
-          <form onSubmit={this.handleCommentSubmit}>
+          <form onSubmit={(e)=>{
+              e.preventDefault();
+              this.handleCommentSubmit(this.state.post.id,this.state.commentText);
+            }}>
             <textarea value={this.state.commentText} onChange={this.handleChange}/><br />
             <input type="submit" value="Post Comment" />
           </form>
-          {this.state.comments.length?
-            this.state.comments.map((comment, key)=>(
+          {this.state.comments.rootComments.length?
+            this.state.comments.rootComments.map((comment, key)=>(
               <Comment key={key} comment={comment}/>
             )):
             <p>no comments</p>
