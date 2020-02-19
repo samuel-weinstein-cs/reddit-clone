@@ -15,6 +15,10 @@ export const getPost = async (id) => {
   return posts.data;
 }
 
+export const newPost = async(postData) => {
+  await api.post(`/posts/`, postData);
+}
+
 export const getComments = async(id) => {
   const comments = await api.get(`/posts/${id}/comments`);
   return comments.data
