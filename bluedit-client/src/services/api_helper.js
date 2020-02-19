@@ -25,7 +25,8 @@ export const getComments = async(id) => {
 }
 
 export const postComment= async(postId, commentData) => {
-  await api.post(`/posts/${postId}/comments`, commentData);
+  const resp = await api.post(`/posts/${postId}/comments`, commentData);
+  return resp.data;
 }
 
 export const loginUser = async(loginData) => {

@@ -68,9 +68,13 @@ export default class Post extends Component{
           <h3>Comments</h3>
           <form onSubmit={async(e)=>{
               e.preventDefault();
-              await postComment(this.state.post.id,{text:this.state.commentText});
+              const comment = await postComment(this.state.post.id,{text:this.state.commentText});
+              this.setState({
+                commentText:"",
+                comments:[...this.state.comments, {comment, children:[]}]
+              })
             }}>
-            <textarea onChange={(e)=>{
+            <textarea value={this.state.commentText} onChange={(e)=>{
                 this.setState({commentText:e.target.value})
               }}/><br />
             <input type="submit" value="Post Comment" />

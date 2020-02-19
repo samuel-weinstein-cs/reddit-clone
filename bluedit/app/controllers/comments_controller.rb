@@ -14,7 +14,8 @@ class CommentsController < ApplicationController
   def create
     params = comment_params
     params[:user] = @current_user
-    @post.comments.create!(params)
+    @comment = @post.comments.create!(params)
+    render json: @comment, include: :user
 
   end
   private
