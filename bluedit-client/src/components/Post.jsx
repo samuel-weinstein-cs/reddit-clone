@@ -60,7 +60,6 @@ export default class Post extends Component{
   }
 
   handleCommentSubmit = async (postId, text, parent=null)=>{
-    console.log("getting here");
     const comment = await postComment(postId,{text:this.state.commentText, comments_id: parent});
     const newComment = {
       comment,
