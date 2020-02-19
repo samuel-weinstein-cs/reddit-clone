@@ -24,6 +24,10 @@ export const getComments = async(id) => {
   return comments.data
 }
 
+export const postComment= async(postId, commentData) => {
+  await api.post(`/posts/${postId}/comments`, commentData);
+}
+
 export const loginUser = async(loginData) => {
   const resp = (await api.post('/auth/login', loginData)).data.auth_resp;
   api.defaults.headers.common.authorization = `Bearer ${resp.auth_token}`;
