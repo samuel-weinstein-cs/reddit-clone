@@ -9,7 +9,8 @@ export default class Post extends Component{
 
     this.state={
       post: null,
-      comments: []
+      comments: [],
+      commentText: ""
     }
   }
 
@@ -20,8 +21,7 @@ export default class Post extends Component{
 
     this.setState({
       post,
-      comments:rootComments,
-      commentText: ""
+      comments:rootComments
     })
   }
 
@@ -52,6 +52,20 @@ export default class Post extends Component{
   //
   // }
 
+  handleChange = (e) => {
+    this.setState({commentText:e.target.value});
+  }
+
+  handleCommentSubmit = async (e)=>{
+    e.preventDefault();
+    console.log("getting here");
+    const comment = await postComment(this.state.post.id,{text:this.state.commentText});
+    this.setState({
+      commentText:"",
+      comments:[...this.state.comments, {comment, children:[]}]
+    })
+  }
+
   render(){
     return(
       <div>
@@ -66,17 +80,8 @@ export default class Post extends Component{
         }
         <div className="post-comments">
           <h3>Comments</h3>
-          <form onSubmit={async(e)=>{
-              e.preventDefault();
-              const comment = await postComment(this.state.post.id,{text:this.state.commentText});
-              this.setState({
-                commentText:"",
-                comments:[...this.state.comments, {comment, children:[]}]
-              })
-            }}>
-            <textarea value={this.state.commentText} onChange={(e)=>{
-                this.setState({commentText:e.target.value})
-              }}/><br />
+          <form onSubmit={this.handleCommentSubmit}>
+            <textarea value={this.state.commentText} onChange={this.handleChange}/><br />
             <input type="submit" value="Post Comment" />
           </form>
           {this.state.comments.length?
