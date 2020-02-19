@@ -4,12 +4,26 @@ import {Link} from 'react-router-dom';
 class Comment extends Component{
   constructor(props){
     super(props)
+
+    this.state={
+      reply:false,
+      commentText:""
+    }
   }
   render(){
     return(
       <div className="comment">
         <Link className="username" to="/">u/{this.props.comment.comment.user.username}</Link><br />
         <p>{this.props.comment.comment.text}</p>
+        <button onClick={()=>{
+            this.setState({reply:!this.state.reply})
+          }}>
+          {this.state.reply?"hide":"reply"}
+        </button>
+        {this.state.reply&&<form>
+          <textarea value={this.state.commentText} /><br />
+          <input type="submit" value="post" />
+        </form>}
         {this.props.comment.children.length!==0&&
           <div className="comment-replies">
             {this.props.comment.children.map((child,key)=>(
