@@ -20,14 +20,21 @@ class Comment extends Component{
           }}>
           {this.state.reply?"hide":"reply"}
         </button>
-        {this.state.reply&&<form>
-          <textarea value={this.state.commentText} /><br />
+        {this.state.reply&&<form onSubmit={(e)=>{
+          e.preventDefault();
+          this.props.onSubmit(this.state.commentText,this.props.comment.comment.comments_id);
+        }}>
+          <textarea value={this.state.commentText} onChange={(e)=>{
+              this.setState({
+                commentText:e.target.value
+              })
+            }}/><br />
           <input type="submit" value="post" />
         </form>}
         {this.props.comment.children.length!==0&&
           <div className="comment-replies">
             {this.props.comment.children.map((child,key)=>(
-              <Comment key={key} comment={child} />
+              <Comment key={key} comment={child} onSubmit={this.props.onSubmit}/>
             ))}
           </div>
         }

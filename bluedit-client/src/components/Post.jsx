@@ -59,8 +59,8 @@ export default class Post extends Component{
     this.setState({commentText:e.target.value});
   }
 
-  handleCommentSubmit = async (postId, text, parent=null)=>{
-    const comment = await postComment(postId,{text:this.state.commentText, comments_id: parent});
+  handleCommentSubmit = async (text, parent=null)=>{
+    const comment = await postComment(this.state.post.id,{text, comments_id: parent});
     const newComment = {
       comment,
       children: []
@@ -93,14 +93,14 @@ export default class Post extends Component{
           <h3>Comments</h3>
           <form onSubmit={(e)=>{
               e.preventDefault();
-              this.handleCommentSubmit(this.state.post.id,this.state.commentText);
+              this.handleCommentSubmit(this.state.commentText);
             }}>
             <textarea value={this.state.commentText} onChange={this.handleChange}/><br />
             <input type="submit" value="Post Comment" />
           </form>
           {this.state.comments.rootComments.length?
             this.state.comments.rootComments.map((comment, key)=>(
-              <Comment key={key} comment={comment}/>
+              <Comment key={key} comment={comment} onSubmit={this.handleCommentSubmit}/>
             )):
             <p>no comments</p>
           }
