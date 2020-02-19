@@ -10,7 +10,7 @@ function PostPreview(props){
           <Link className="username" to="/">u/{props.post.user.username}</Link>
         </div>
 
-        <div>
+        <div className="post-preview-right">
           <h2>{props.post.title}</h2>
           <p>{props.post.text}</p>
         </div>

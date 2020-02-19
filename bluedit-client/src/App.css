@@ -11,8 +11,8 @@ header h1 {
 }
 .post-preview{
   border-bottom: 1px solid gray;
-  display:flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 10% 1fr;
   height: 150px;
 
 }
@@ -26,7 +26,9 @@ header h1 {
 }
 .post-preview img {
   margin: 0 0.5vw;
-  height:80%
+  height:80%;
+  max-width: 80%;
+  object-fit: cover;
 }
 .post-preview div {
   height: 100%;
