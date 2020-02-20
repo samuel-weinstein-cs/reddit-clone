@@ -26,6 +26,12 @@ class App extends Component {
     this.props.history.push("/");
   }
 
+  handleLogout = () => {
+    this.setState({user: null})
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userId");
+  }
+
   async componentDidMount(){
     const user = await verifyUser();
     this.setState({user})
@@ -37,7 +43,7 @@ class App extends Component {
         <header className="App-header">
           <Link to="/"><h1><span className="blue">Blue</span>dit</h1></Link>
           {this.state.user?
-            <Link to="/">Welcome, {this.state.user.username}</Link>
+            <a onClick={this.handleLogout}>Welcome, {this.state.user.username}</a>
             :
             <Link to="/login">Login</Link>
           }
