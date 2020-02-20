@@ -17,6 +17,10 @@ class PostsController < ApplicationController
 
   end
 
+  def destroy
+    @post.destroy
+    json_response(status: 'SUCCESS', message: 'item deleted successfully.')
+  end
 
   private
 

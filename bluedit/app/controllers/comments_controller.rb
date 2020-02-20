@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    json_response(status: 'SUCCESS', message: 'item deleted successfully.', data: @item.name)
+    json_response(status: 'SUCCESS', message: 'item deleted successfully.')
   end
 
   def comment_params
