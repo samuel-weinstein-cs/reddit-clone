@@ -11,6 +11,7 @@ class Comment extends Component{
     }
   }
   render(){
+    console.log(this.props.comment);
     return(
       <div className="comment">
         <Link className="username" to="/">u/{this.props.comment.comment.user.username}</Link><br />
@@ -20,9 +21,13 @@ class Comment extends Component{
           }}>
           {this.state.reply?"hide":"reply"}
         </button>
-        {this.state.reply&&<form onSubmit={(e)=>{
+        {this.state.reply&&<form onSubmit={async (e)=>{
           e.preventDefault();
-          this.props.onSubmit(this.state.commentText,this.props.comment.comment.id);
+          await this.props.onSubmit(this.state.commentText,this.props.comment.comment.id);
+          this.setState({
+            commentText:"none",
+            reply:false
+          })
         }}>
           <textarea value={this.state.commentText} onChange={(e)=>{
               this.setState({

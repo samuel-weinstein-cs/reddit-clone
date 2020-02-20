@@ -50,7 +50,6 @@ export default class Post extends Component{
     })
     return {rootComments,commentsObject};
   }
-
   // commentsSort = (comments) => {
   //
   // }
@@ -65,7 +64,14 @@ export default class Post extends Component{
       comment,
       children: []
     }
-    let commentsCopy=JSON.parse(JSON.stringify(this.state.comments));//make deep copy of object, probably quite inefficient
+    const commentsObjectCopy=JSON.parse(JSON.stringify(this.state.comments.commentsObject));//make deep copy of object, probably quite inefficient
+    console.log(commentsObjectCopy);
+    let commentsArray=Object.values(commentsObjectCopy).map((commentWithChildren)=>{
+      return commentWithChildren.comment;
+    })
+    let commentsCopy=this.commentsCalc(commentsArray)//re-calculate root comments from object list :) fml
+    console.log(commentsCopy);
+    commentsCopy.commentsObject[comment.id]=newComment;
     if (parent){
       commentsCopy.commentsObject[comment.comments_id].children.push(newComment)
     } else {
@@ -98,6 +104,7 @@ export default class Post extends Component{
             <textarea value={this.state.commentText} onChange={this.handleChange}/><br />
             <input type="submit" value="Post Comment" />
           </form>
+          {console.log(this.state.comments)}
           {this.state.comments.rootComments.length?
             this.state.comments.rootComments.map((comment, key)=>(
               <Comment key={key} comment={comment} onSubmit={this.handleCommentSubmit}/>
