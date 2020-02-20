@@ -20,6 +20,11 @@ class CommentsController < ApplicationController
   end
   private
 
+  def destroy
+    @comment.destroy
+    json_response(status: 'SUCCESS', message: 'item deleted successfully.', data: @item.name)
+  end
+
   def comment_params
     params.permit(:text, :comments_id)
   end
